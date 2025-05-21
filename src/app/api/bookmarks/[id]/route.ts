@@ -66,6 +66,34 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 }
 
 
+export async function GET(_: Request, { params }: { params: { id: string } }) {
+  const supabase = await createClient()
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+  if (userError || !user) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+  }
+
+  const { id } = params
+
+  if (!id) {
+    return NextResponse.json({ message: 'Invalid ID' }, { status: 400 })
+  }
+
+  const { data, error } = await supabase
+    .from("bookmarks")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .single()
+
+  if (error || !data) {
+    return NextResponse.json({ message: "Bookmark not found" }, { status: 404 })
+  }
+
+  return NextResponse.json(data)
+}
+
 
 
 

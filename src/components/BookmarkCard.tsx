@@ -8,9 +8,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
-import { MoreVertical } from "lucide-react";
+import { ArrowRight, MoreVertical } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Bookmark } from "@/models/bookmark-schema";
+import Link from "next/link";
 
 type BookmarkCardProps = Bookmark & {
   onEdit?: (id: string) => void;
@@ -30,7 +31,7 @@ export function BookmarkCard({
 }: BookmarkCardProps) {
   return (
     <Card className="w-full shadow-md border rounded-2xl hover:shadow-lg transition">
-      <CardContent className="p-6 space-y-4 relative">
+      <CardContent className="p-6 pb-0 space-y-4 relative">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-3">
             {favicon_url && (
@@ -84,19 +85,35 @@ export function BookmarkCard({
         </div>
 
         <p className="text-sm text-muted-foreground line-clamp-4">
-          
-            {summary.length > 200 ? summary.slice(0, 200) + "..." : summary}
-          
+          {summary.length > 200 ? summary.slice(0, 200) + "..." : summary}
         </p>
 
-        <div className="flex flex-wrap gap-2">
+        <div className=" flex flex-row w-full justify-center items-center">
+
+        <div className="flex flex-wrap gap-2 w-5/6">
           {tags?.map((tag, index) => (
             <Badge key={index} variant="secondary">
               #{tag}
             </Badge>
           ))}
         </div>
+        
+        <div className="w-1/6 py-0 my-0 flex justify-center items-center">
+          <Link href={`/bookmarks/${id}`}>
+            {/* <Button variant="ghost" size="icon" className="ml-auto">
+              <ArrowRight  className="h-10 w-10 text-muted-foreground hover:text-primary transition-colors" />
+              
+            </Button> */}
+            <ArrowRight size={20} />
+          </Link>
+        </div>
+        
+        
+        </div>
+
+        
       </CardContent>
+      
     </Card>
   );
 }

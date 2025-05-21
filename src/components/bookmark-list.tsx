@@ -220,7 +220,7 @@ export function BookmarkList() {
 
       {/* Floating Action Button */}
       <Button
-        className="fixed w-10 h-10 bottom-12 right-10 p-4 rounded-full shadow-lg"
+        className="fixed w-10 h-10 md:w-12 md:h-12 bottom-10 right-10 md:right-15 md:bottom-15 p-4 rounded-full shadow-lg"
         onClick={() => setAddOpen(true)}
       >
         <LinkIcon className="w-10 h-10" />
