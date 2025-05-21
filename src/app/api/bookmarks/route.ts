@@ -56,20 +56,20 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { error: insertError } = await supabase.from('bookmarks').insert({
+    const { data, error: insertError } = await supabase.from('bookmarks').insert({
       user_id: user.id,
       url,
       title,
       summary,
       favicon_url,
       tags,
-    })
+    }).select().single()
 
     if (insertError) {
       throw insertError
     }
 
-    return NextResponse.json({ message: 'Bookmark saved!' }, { status: 200 })
+    return NextResponse.json({ bookmark: data, message: 'Bookmark saved!' }, { status: 200 })
   } catch (err: any) {
     console.error(err)
     return NextResponse.json(

@@ -9,7 +9,7 @@ export const bookmarkSchema = z.object({
   summary: z.string(),
   favicon_url: z.string().url(),
   created_at: z.string(), 
-  tags: z.array(z.string()),
+  tags: z.array(z.string()).optional(),
 })
 
 export type Bookmark = z.infer<typeof bookmarkSchema>

@@ -90,7 +90,7 @@ export function BookmarkCard({
         </p>
 
         <div className="flex flex-wrap gap-2">
-          {tags.map((tag, index) => (
+          {tags?.map((tag, index) => (
             <Badge key={index} variant="secondary">
               #{tag}
             </Badge>

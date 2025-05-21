@@ -21,12 +21,13 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 // }
 
 type BookmarkFormProps = {
-  initialData?: Partial<z.infer<typeof bookmarkSchema>>  // ✅ use full schema here
+  initialData?: Partial<z.infer<typeof bookmarkSchema>>  
   isEdit?: boolean
   onSubmit: (data: Partial<z.infer<typeof bookmarkSchema>>) => Promise<void>
+  onCancel?: () => void 
 }
 
-export function BookmarkForm({ initialData, onSubmit, isEdit }: BookmarkFormProps) {
+export function BookmarkForm({ initialData, onSubmit, isEdit, onCancel }: BookmarkFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,7 +55,7 @@ export function BookmarkForm({ initialData, onSubmit, isEdit }: BookmarkFormProp
   const handleFormSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       await onSubmit({...data, id: initialData?.id})
-      toast.success(initialData ? "Bookmark updated" : "Bookmark saved")
+      toast.success(isEdit ? "Bookmark updated" : "Bookmark saved")
     } catch (error) {
       toast.error("Something went wrong")
     }
@@ -171,6 +172,13 @@ export function BookmarkForm({ initialData, onSubmit, isEdit }: BookmarkFormProp
         <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isEdit ? "Update Bookmark" : "Save Bookmark"}
        </Button>
+       
+   {!isEdit && (
+    <Button type="button" variant="outline" className="w-full" onClick={onCancel}>
+      Cancel
+    </Button>
+  )}
+       
       </form>
     </Form>
   )
