@@ -19,7 +19,7 @@ export async function GET() {
     .from('bookmarks')
     .select('*')
     .eq('user_id', user.id)
-    .order('created_at', { ascending: false })
+    .order('position', { ascending: true })
 
   if (fetchError) {
     return NextResponse.json(
