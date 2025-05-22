@@ -19,27 +19,6 @@ A modern bookmarking web app that lets users save, preview, organize, and manage
 
 ---
 
-## 🖼️ Screenshots
-
-<!-- Add screenshots below by dragging them here or uploading manually -->
-
-### 📌 Adding a New Bookmark  
-![Add Bookmark](./public/screenshots/create_bookmark.PNG)
-
-### 📖 Bookmark Details  
-![Detailed Bookmark](./public/screenshots/card_button.PNG)
-
-### 🔍 Searching Bookmarks  
-![Search Bookmark](./public/screenshots/searching_bookmark.PNG)
-
-### 🌓 Theme Toggle & Menu  
-![Theme Toggle](./public/screenshots/toggle_button.PNG)
-
-### 🛠️ Edit & Delete Bookmarks  
-![Edit or Delete Bookmark Button](./public/screenshots/card_popup_button.PNG)  
-![Edit Form](./public/screenshots/update_form.PNG)
-
----
 
 ## 🛠 Tech Stack
 
@@ -109,6 +88,28 @@ Much of the time went into:
 - Debugging edge cases with drag-and-drop and API behavior  
 - Polishing the UI with Tailwind and ShadCN to follow modern design trends  
 - Dealing with Vercel deployment build issues and Supabase authentication quirks
+
+---
+
+## 🖼️ Screenshots
+
+<!-- Add screenshots below by dragging them here or uploading manually -->
+
+### 📌 Adding a New Bookmark  
+![Add Bookmark](./public/screenshots/create_bookmark.PNG)
+
+### 📖 Bookmark Details  
+![Detailed Bookmark](./public/screenshots/card_button.PNG)
+
+### 🔍 Searching Bookmarks  
+![Search Bookmark](./public/screenshots/searching_bookmark.PNG)
+
+### 🌓 Theme Toggle & Menu  
+![Theme Toggle](./public/screenshots/toggle_button.PNG)
+
+### 🛠️ Edit & Delete Bookmarks  
+![Edit or Delete Bookmark Button](./public/screenshots/card_popup_button.PNG)  
+![Edit Form](./public/screenshots/update_form.PNG)
 
 ---
 
