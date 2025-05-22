@@ -55,7 +55,7 @@ export function SearchFilter({ onSearch }: SearchFilterProps) {
     setShowTags(false)
     setMatchAll(false)
     setHasActiveSearch(false)
-    onSearch("", [], false) // reset parent search results
+    onSearch("", [], false) 
   }
 
   return (
@@ -118,83 +118,6 @@ export function SearchFilter({ onSearch }: SearchFilterProps) {
   )
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// "use client"
-
-// import { useEffect, useState } from "react"
-// import { Input } from "@/components/ui/input"
-// import { Button } from "@/components/ui/button"
-// import { Badge } from "@/components/ui/badge"
-// import { toast } from "sonner"
-
-// interface SearchFilterProps {
-//   onSearch: (search: string, tags: string[]) => void
-// }
-
-// export function SearchFilter({ onSearch }: SearchFilterProps) {
-//   const [search, setSearch] = useState("")
-//   const [tags, setTags] = useState<string[]>([])
-//   const [selectedTags, setSelectedTags] = useState<string[]>([])
-
-//   useEffect(() => {
-//     const fetchTags = async () => {
-//       try {
-//         const res = await fetch("/api/bookmarks/tags")
-//         const data = await res.json()
-//         setTags(data.tags || [])
-//       } catch (err) {
-//         toast.error("Failed to load tags")
-//       }
-//     }
-
-//     fetchTags()
-//   }, [])
-
-//   const toggleTag = (tag: string) => {
-//     setSelectedTags(prev =>
-//       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
-//     )
-//   }
-
-//   return (
-//     <div className="w-full space-y-4 mb-6">
-//       <div className="flex gap-2">
-//         <Input
-//           placeholder="Search bookmarks..."
-//           value={search}
-//           onChange={e => setSearch(e.target.value)}
-//           className="w-full"
-//         />
-//         <Button onClick={() => onSearch(search, selectedTags)}>Search</Button>
-//       </div>
-//       <div className="flex flex-wrap gap-2">
-//         {tags.map(tag => (
-//           <Badge
-//             key={tag}
-//             variant={selectedTags.includes(tag) ? "default" : "outline"}
-//             onClick={() => toggleTag(tag)}
-//             className="cursor-pointer"
-//           >
-//             {tag}
-//           </Badge>
-//         ))}
-//       </div>
-//     </div>
-//   )
-// }
 
 
 
