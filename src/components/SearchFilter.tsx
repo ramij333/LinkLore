@@ -26,6 +26,7 @@ export function SearchFilter({ onSearch }: SearchFilterProps) {
         const data = await res.json()
         setTags(data.tags || [])
       } catch (err) {
+        console.log(err)
         toast.error("Failed to load tags")
       }
     }
@@ -104,7 +105,7 @@ export function SearchFilter({ onSearch }: SearchFilterProps) {
       {hasActiveSearch && (
         <div className="text-sm text-muted-foreground">
           Showing results for:
-          {search && <span className="font-medium"> "{search}"</span>}
+          {search && <span className="font-medium"> &quot{search}&quot</span>}
           {selectedTags.length > 0 && (
             <span className="font-medium">
               {search ? " + " : ""}

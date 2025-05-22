@@ -49,7 +49,7 @@ export function AuthForm({ type }: AuthFormProps) {
       if (!res.ok) throw new Error(data.message || "Something went wrong")
 
       toast.success(type === "login" ? "Logged in!" : "Account created!")
-      router.push("/")
+      router.push("/bookmarks")
     } catch (err: any) {
       toast.error(err.message)
     } finally {

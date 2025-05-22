@@ -68,6 +68,7 @@ export function BookmarkList() {
         setBookmarks(data.bookmarks || []);
         // setBookmarks(Array.isArray(raw) ? raw : raw.data || [])
       } catch (error) {
+        console.log(error)
         toast.error("Unable to load bookmarks");
       } finally {
         setLoading(false);
@@ -137,6 +138,7 @@ export function BookmarkList() {
     const data = await res.json()
     setBookmarks(data.bookmarks || [])
   } catch (err) {
+    console.log(err)
     toast.error("Search failed")
   } finally {
     setLoading(false)
@@ -224,6 +226,7 @@ export function BookmarkList() {
       setUrlInput("");
       setPreviewData(null);
     } catch (err) {
+        console.log(err)
       toast.error("Error saving bookmark");
     }
   };
@@ -243,7 +246,6 @@ function SortableBookmarkCard({
 }) {
   const {
     attributes,
-    listeners,
     setNodeRef,
     transform,
     transition,

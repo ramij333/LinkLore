@@ -1,8 +1,8 @@
 
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/api'
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_: NextRequest, context: { params: { id: string } }) {
   const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
 
@@ -10,7 +10,7 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
-  const { id } = params
+  const { id } = context.params
   if (!id) {
     return NextResponse.json({ message: 'Invalid ID' }, { status: 400 })
   }
@@ -28,7 +28,7 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
   return NextResponse.json({ message: 'Bookmark deleted successfully' })
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
   const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
 
@@ -36,7 +36,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
-  const { id } = params
+  const { id } = context.params
   const { url, title, tags, summary, favicon_url } = await req.json()
 
   if (!url && !title && !tags && !summary && !favicon_url) {
@@ -66,7 +66,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 }
 
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: NextRequest, context: { params: { id: string } }) {
   const supabase = await createClient()
   const { data: { user }, error: userError } = await supabase.auth.getUser()
 
@@ -74,7 +74,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
-  const { id } = params
+  const { id } = context.params
 
   if (!id) {
     return NextResponse.json({ message: 'Invalid ID' }, { status: 400 })

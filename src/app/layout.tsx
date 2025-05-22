@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "next-themes";
+import ThemeUserMenu from "@/components/ThemeUserMenu";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,10 +27,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+       <head>
+        {/* This script sets the theme class before hydration to avoid mismatch */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  var theme = localStorage.getItem("theme");
+                  if (!theme || theme === "system") {
+                    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                    theme = prefersDark ? "dark" : "light";
+                  }
+                  document.documentElement.className = theme;
+                  document.documentElement.style.colorScheme = theme;
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}{" "}
+           <div className="fixed top-7 right-5 md:top-10 md:right-10 z-50">
+            <ThemeUserMenu />
+          </div>
+        </ThemeProvider>
         <Toaster className="z-[9999]" expand={true} richColors />
       </body>
     </html>

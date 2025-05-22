@@ -44,6 +44,14 @@
 }
 
 :root {
+ --gradient-bg: linear-gradient(
+  135deg,
+  #f9f9f9 0%,
+  #dcedf9 25%,
+  #fcefee 50%,
+  #e8f6f3 75%,
+  #f9f9f9 100%
+);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -79,6 +87,8 @@
 }
 
 .dark {
+  --gradient-bg: linear-gradient(135deg, #1a1c2c 0%, #3a3d5c 50%, #2b2d42 100%);
+
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.21 0.006 285.885);
@@ -112,11 +122,17 @@
   --sidebar-ring: oklch(0.552 0.016 285.938);
 }
 
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: var(--gradient-bg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
   }
 }
+
