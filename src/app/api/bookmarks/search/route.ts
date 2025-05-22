@@ -1,8 +1,12 @@
+
+// pages/api/bookmarks/search/route.ts (or wherever you defined GET)
+
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/api'
 
 export async function GET(req: Request) {
   const supabase = await createClient()
+
   const {
     data: { user },
     error: authError,
@@ -14,7 +18,13 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url)
   const search = searchParams.get('search') || ''
-  const tag = searchParams.get('tag') || ''
+  const matchType = searchParams.get('match') || 'any' // default to "any"
+  const tagsParam = searchParams.get('tags') || ''
+
+  const tags = tagsParam
+    .split(',')
+    .map(tag => tag.trim())
+    .filter(Boolean)
 
   let query = supabase
     .from('bookmarks')
@@ -25,8 +35,10 @@ export async function GET(req: Request) {
     query = query.or(`title.ilike.%${search}%,summary.ilike.%${search}%`)
   }
 
-  if (tag) {
-    query = query.contains('tags', [tag])
+  if (tags.length > 0) {
+    query = matchType === 'all'
+      ? query.contains('tags', tags)    // AND: must contain all tags
+      : query.overlaps('tags', tags)    // OR: any matching tag
   }
 
   const { data: bookmarks, error } = await query.order('created_at', { ascending: false })
@@ -44,26 +56,23 @@ export async function GET(req: Request) {
 
 
 
-// import { NextApiRequest, NextApiResponse } from 'next'
-// import createClient from '@/lib/supabase/api'
+// import { NextResponse } from 'next/server'
+// import { createClient } from '@/lib/supabase/api'
 
-// export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-//   if (req.method !== 'GET') {
-//     return res.status(405).json({ message: 'Method not allowed' })
-//   }
-
-//   const supabase = createClient(req, res)
+// export async function GET(req: Request) {
+//   const supabase = await createClient()
 //   const {
 //     data: { user },
 //     error: authError,
 //   } = await supabase.auth.getUser()
 
 //   if (authError || !user) {
-//     return res.status(401).json({ message: 'Unauthorized' })
+//     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
 //   }
 
-//   const search = (req.query.search as string) || ''
-//   const tag = (req.query.tag as string) || ''
+//   const { searchParams } = new URL(req.url)
+//   const search = searchParams.get('search') || ''
+//   const tags = searchParams.getAll('tag')  // Get all "tag" query params as array
 
 //   let query = supabase
 //     .from('bookmarks')
@@ -74,15 +83,33 @@ export async function GET(req: Request) {
 //     query = query.or(`title.ilike.%${search}%,summary.ilike.%${search}%`)
 //   }
 
-//   if (tag) {
-//     query = query.contains('tags', [tag])
+//   if (tags.length > 0) {
+//     query = query.overlaps('tags', tags)
 //   }
 
 //   const { data: bookmarks, error } = await query.order('created_at', { ascending: false })
 
 //   if (error) {
-//     return res.status(500).json({ message: 'Failed to fetch bookmarks', error: error.message })
+//     return NextResponse.json({ message: 'Failed to fetch bookmarks', error: error.message }, { status: 500 })
 //   }
 
-//   return res.status(200).json({ bookmarks })
+//   return NextResponse.json({ bookmarks })
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
